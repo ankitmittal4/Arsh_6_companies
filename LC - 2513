@@ -1,0 +1,32 @@
+#define ll long long
+class Solution {
+public:
+    ll getGCD(ll a, ll b){
+        if(b==0){
+            return a;
+        }
+        return getGCD(b, a%b);
+    }
+    int minimizeSet(int divisor1, int divisor2, int uniqueCnt1, int uniqueCnt2) {
+        ll low = 1;
+        ll high = INT_MAX;
+        ll ans = INT_MAX;
+
+        while(low<=high){
+            ll mid = (low + high)/ 2;
+            ll t1 = mid - mid/divisor1;
+            ll t2 = mid - mid/divisor2;
+            ll gcd = getGCD(divisor1, divisor2);
+            ll lcm = ((ll)(divisor1) * (ll)(divisor2)) / gcd;
+            ll temp = mid - mid/lcm;
+            if(t1 >= uniqueCnt1 && t2 >= uniqueCnt2 && temp >= uniqueCnt1 + uniqueCnt2){                
+                high = mid-1;
+                ans = min(ans, mid);
+            }
+            else{
+                low = mid+1;
+            }
+        }
+        return ans;
+    }
+};

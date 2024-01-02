@@ -1,0 +1,51 @@
+// class cmp{
+//     public:
+//     bool operator() (const pair<string, int> &a, const pair<string, int> &b) const{
+//         if(a.first.size() == b.first.size()){
+//             if(a.first == b.first){
+//                 return a.second < b.second;
+//             }
+//             return a.first < b.first;
+//         }
+//         return a.first.size() < b.first.size();
+//     } 
+// };
+
+class Solution {
+public:
+    vector<int> smallestTrimmedNumbers(vector<string>& nums, vector<vector<int>>& queries) {
+        vector<int> ans;
+        for(auto it: queries){
+            int idx = it[0];
+            int trim = it[1];
+            // priority_queue<pair<string, int>, vector<int>, cmp> pq;
+            priority_queue<pair<string,int>,vector<pair<string,int>>,greater<pair<string,int>>>pq; 
+            for(int i=0; i<nums.size(); i++){
+                // cout<<nums[i].substr(2)<<endl;
+                string trimStr = nums[i].substr(nums[i].size() - trim);
+                pq.push({trimStr, i});
+            }
+
+            int top;
+            while(!pq.empty() && idx--){
+                top = pq.top().second;
+                pq.pop();
+            }
+            ans.push_back(top);
+            // while(pq.size() > idx){
+            //     pq.pop();
+            // }
+            // string idxSmallEle = pq.top().first;
+            // int index = pq.top().second;
+
+            // while(pq.size()>0 && pq.top().first == idxSmallEle && pq.top().second < index){
+            //     index = pq.top().second;
+            //     pq.pop();
+            // }
+            // ans.push_back(index);
+
+        }
+        return ans;
+
+    }
+};
