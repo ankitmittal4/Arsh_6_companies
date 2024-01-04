@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void solve(string digits, vector<string> map, vector<string> &ans, string st, int index){
+        if(index == digits.size()){
+            ans.push_back(st);
+            return;
+        }
+        int num = digits[index] - '0';
+        string match = map[num-2];
+        for(int i=0; i<match.size(); i++){
+            st.push_back(match[i]);
+            solve(digits, map, ans, st, index+1);
+            st.pop_back();
+
+        }
+
+
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        if(digits.size() == 0){
+            return ans;
+        }
+        vector<string> map = {"abc", "def", "ghi", "jkl", "mno", "pqrs","tuv", "wxyz"};
+        string st = "";
+        solve(digits, map, ans, st, 0);
+        return ans;
+        
+    }
+};
